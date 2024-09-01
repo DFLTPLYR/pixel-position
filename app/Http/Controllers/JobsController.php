@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Jobs;
 use App\Http\Requests\StoreJobsRequest;
 use App\Http\Requests\UpdateJobsRequest;
+use App\Models\Tag;
+use Illuminate\Contracts\Queue\Job;
 
 class JobsController extends Controller
 {
@@ -13,7 +15,10 @@ class JobsController extends Controller
      */
     public function index()
     {
-        //
+        return view('jobs.index', [
+            'jobs' => Jobs::all(),
+            'tags' => Tag::all()
+        ]);
     }
 
     /**

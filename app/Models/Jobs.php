@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Jobs extends Model
 {
@@ -15,8 +15,16 @@ class Jobs extends Model
         return $this->belongsTo(Employer::class);
     }
 
-    public function jobs(): HasMany
+    public function tag(string $name)
+
     {
-        return $this->hasMany(Jobs::class);
+        $tag = Tag::firstOrCreate(['name' => $name]);
+
+        $this->tags()->attach($tag);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
     }
 }
